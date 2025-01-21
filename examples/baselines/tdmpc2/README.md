@@ -17,12 +17,12 @@ or follow the [original repo](https://github.com/nicklashansen/tdmpc2)'s guide t
 
 Simple command to run the algorithm with default configs (5M params, 1M steps, default control mode, 32 envs, state obs mode) :
 ```bash
-python train.py env_id=PushCube-v1
+python train_state.py env_id=PushCube-v1
 ```
 
 More advanced command with optional configs : (More can be found in config.yaml)
 ```bash
-python train.py model_size=5 steps=1_000_000 seed=1 exp_name=default \
+python train_state.py model_size=5 steps=1_000_000 seed=1 exp_name=default \
   env_id=PushCube-v1 env_type=gpu num_envs=32 control_mode=pd_ee_delta_pose obs=state \
   save_video_local=false wandb=true wandb_entity=??? wandb_project=??? wandb_group=??? wandb_name=??? setting_tag=??? 
 ```
@@ -32,7 +32,7 @@ python train.py model_size=5 steps=1_000_000 seed=1 exp_name=default \
 
 The visual based RL expects model_size = 5. Also, make sure you have sufficient CPU memory, otherwise lower the buffer_size and use gpu env.
 ```bash
-python train.py buffer_size=500_000 steps=5_000_000 seed=1 exp_name=default \
+python train_state.py buffer_size=500_000 steps=5_000_000 seed=1 exp_name=default \
   env_id=PushCube-v1 env_type=gpu num_envs=32 control_mode=pd_ee_delta_pose obs=rgb \
   save_video_local=false wandb=true wandb_entity=??? wandb_project=??? wandb_group=??? wandb_name=??? setting_tag=???
 ```

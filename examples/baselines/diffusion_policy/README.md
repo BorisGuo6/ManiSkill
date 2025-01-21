@@ -38,7 +38,7 @@ Note that some demonstrations are slow (e.g. motion planning or human teleoperat
 
 Example training, learning from 100 demonstrations generated via motionplanning in the PickCube-v1 task
 ```bash
-python train.py --env-id PickCube-v1 \
+python train_state.py --env-id PickCube-v1 \
   --demo-path ~/.maniskill/demos/PickCube-v1/motionplanning/trajectory.state.pd_ee_delta_pos.cuda.h5 \
   --control-mode "pd_ee_delta_pos" --sim-backend "cpu" --num-demos 100 --max_episode_steps 100 \
   --total_iters 30000 
@@ -63,7 +63,7 @@ python -m mani_skill.trajectory.replay_trajectory \
 Once our GPU backend demonstration dataset is ready, you can use the following command to train and evaluate on the GPU simulation.
 
 ```bash
-python train.py --env-id PickCube-v1 \
+python train_state.py --env-id PickCube-v1 \
   --demo-path ~/.maniskill/demos/PickCube-v1/motionplanning/trajectory.state.pd_ee_delta_pos.cuda.h5 \
   --control-mode "pd_ee_delta_pos" --sim-backend "gpu" --num-demos 100 --max_episode_steps 100 \
   --total_iters 30000 \

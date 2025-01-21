@@ -3,7 +3,7 @@ import gymnasium as gym
 import mani_skill.envs
 from mani_skill.utils import gym_utils
 from mani_skill.vector.wrappers.gymnasium import ManiSkillVectorEnv
-from mani_skill.utils.wrappers import RecordEpisode, FrameStack, CPUGymWrapper
+from mani_skill.utils.wrappers import RecordEpisode, FrameStack, CPUGymWrapper, FlattenRGBDObservationWrapper
 
 
 def make_eval_envs(env_id, num_envs: int, sim_backend: str, env_kwargs: dict, other_kwargs: dict, video_dir: Optional[str] = None, wrappers: list[gym.Wrapper] = []):
@@ -25,6 +25,11 @@ def make_eval_envs(env_id, num_envs: int, sim_backend: str, env_kwargs: dict, ot
                 env = gym.make(env_id, reconfiguration_freq=1, **env_kwargs)
                 for wrapper in wrappers:
                     env = wrapper(env)
+
+                if env_kwargs['obs_mode'] == "rgbd":
+                    # rgbd obs mode returns a dict of data, we flatten it so there is just a rgbd key and state key
+                    env = FlattenRGBDObservationWrapper(env, rgb=True, depth=True, state=False)
+
                 env = CPUGymWrapper(env, ignore_terminations=True, record_metrics=True)
                 if video_dir:
                     env = RecordEpisode(env, output_dir=video_dir, save_trajectory=False, info_on_video=True, source_type="diffusion_policy", source_desc="diffusion_policy evaluation rollout")
